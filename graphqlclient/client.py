@@ -14,7 +14,7 @@ class GraphQLClient:
         self.token = token
         self.headername = headername
 
-    def _send(self, query, variables):
+    def _send(self, query, variables, print_err=True):
         data = {'query': query,
                 'variables': variables}
         headers = {'Accept': 'application/json',
@@ -29,6 +29,7 @@ class GraphQLClient:
             response = urllib.request.urlopen(req)
             return response.read().decode('utf-8')
         except urllib.error.HTTPError as e:
-            print((e.read()))
-            print('')
+            if print_err is True:
+                print((e.read()))
+                print('')
             raise e
